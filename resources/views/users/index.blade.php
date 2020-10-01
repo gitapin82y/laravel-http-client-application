@@ -34,7 +34,14 @@
                                     <td>{{$user->first_name}}</td>
                                     <td>{{$user->last_name}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>
+                                    <td class="d-flex">
+                                        <form action="{{ route('users.destroy',$user->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <a class="btn btn-sm btn-secondary"
+                                        href="{{ route('users.edit', $user->id) }}">Edit</a>
                                         <a class="btn btn-sm btn-primary"
                                             href="{{ route('users.show', $user->id) }}">Show</a>
                                     </td>

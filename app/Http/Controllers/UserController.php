@@ -90,6 +90,11 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        $response = Http::get('https://reqres.in/api/users/' . $id);
+
+        $user = $response->object()->data;
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -101,7 +106,25 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         //
+         $this->validate($request, [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $response = Http::put('https://reqres.in/api/users/'.$id, [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+        ]);
+
+        if ($response->successful()) {
+            $user = $response->object();
+            return redirect()->route('users.index')->with('success', 'User ' . $id . ' success update');
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -112,6 +135,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+         //
+         $response = Http::delete('https://reqres.in/api/users/' . $id);
+
+
+        if ($response->successful()) {
+            $user = $response->object();
+            return redirect()->route('users.index')->with('success', 'User ' . $id . ' success delete');
+        }
+ 
+        return redirect()->back();
+
     }
 }

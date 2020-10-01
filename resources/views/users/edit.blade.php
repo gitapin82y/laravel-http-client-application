@@ -9,24 +9,27 @@
 
                 <div class="card-body">
 
-                    <form>
+                    <form action="{{ route('users.update',$user->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="first_name">First Name</label>
-                            <input type="text" class="form-control" name="first_name" value="">
+                            <input type="text" class="form-control" name="first_name" value="{{ $user->first_name}}">
                         </div>
 
                         <div class="form-group">
                             <label for="last_name">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" value="">
+                            <input type="text" class="form-control" name="last_name" value="{{ $user->last_name}}">
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" value="">
+                            <input type="email" class="form-control" name="email" value="{{ $user->email}}">
                         </div>
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a class="btn btn-primary" href="{{ route('users.index') }}">Return</a>
                     </form>
 
-                    <a class="btn btn-primary" href="{{ route('users.index') }}">Return</a>
                 </div>
             </div>
         </div>
